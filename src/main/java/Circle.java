@@ -1,6 +1,4 @@
-/**
- * Created by Хозяин on 28.10.2015.
- */
+
 public class Circle {
     private float diameter;
 
@@ -9,6 +7,16 @@ public class Circle {
     }
 
     public float getSquare(){
-        return (float)(Math.PI*diameter*diameter/4);
+        float result = (float)(Math.PI*diameter*diameter/4);
+        result = round(result, 2);
+        return result;
+    }
+
+    private float round(float number, int scale) {
+        int pow = 10;
+        for (int i = 1; i < scale; i++)
+            pow *= 10;
+        float tmp = number * pow;
+        return (float) (int) ((tmp - (int) tmp) >= 0.5f ? tmp + 1 : tmp) / pow;
     }
 }

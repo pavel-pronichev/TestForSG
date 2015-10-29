@@ -13,9 +13,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-/**
- * Created by Хозяин on 28.10.2015.
- */
+
 public class Test {
 
     static ConcurrentLinkedQueue concurrentLinkedQueue = new ConcurrentLinkedQueue();
@@ -25,7 +23,7 @@ public class Test {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setValidating(false);
         DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-        Document document = documentBuilder.parse(new File("C:/Users/Хозяин/Desktop/test.xml"));
+        Document document = documentBuilder.parse(new File(args[0]));
 
         NodeList shapeLevel = document.getChildNodes();
 
@@ -37,8 +35,12 @@ public class Test {
         }
 
         Set<Thread> set = new HashSet<>();
+        int cQ = 4;
+        if(!args[1].isEmpty()){
+            cQ = Integer.parseInt(args[1]);
+        }
 
-        for(int i = 0; i<4; i++){
+        for(int i = 0; i<cQ; i++){
             Controller controller = new Controller();
             Thread thread = new Thread(controller);
             thread.start();
@@ -69,13 +71,13 @@ public class Test {
 
     public static class Controller implements Runnable {
 
-        private boolean isOver = true;
+        private boolean isOver = false;
 
         public Controller(){}
         @Override
         public void run() {
 
-            while (isOver) {
+            while (!isOver) {
                 if (!concurrentLinkedQueue.isEmpty()) {
 
                     int count = counter++;
@@ -90,22 +92,23 @@ public class Test {
                     switch (nameFigure) {
                         case "triangle":
                             Triangle triangle = new Triangle(Float.parseFloat(list.get(1).toString()), Float.parseFloat(list.get(2).toString()), Float.parseFloat(list.get(3).toString()));
-                            System.out.println(count + ": " + colorItem + " " + triangle.getSquare());
+
+                            System.out.println(count + ": " + colorItem + "-" + triangle.getSquare());
                             break;
                         case "circle":
                             Circle circle = new Circle(Float.parseFloat(list.get(1).toString()));
-                            System.out.println(count + ": " + colorItem + " " + circle.getSquare());
+                            System.out.println(count + ": " + colorItem + "-" + circle.getSquare());
                             break;
                         case "square":
                             Square square = new Square(Float.parseFloat(list.get(1).toString()));
-                            System.out.println(count + ": " + colorItem + " " + square.getSquare());
+                            System.out.println(count + ": " + colorItem + "-" + square.getSquare());
                             break;
                         case "rectangle":
                             Rectangle rectangle = new Rectangle(Float.parseFloat(list.get(1).toString()), Float.parseFloat(list.get(2).toString()));
-                            System.out.println(count + ": " + colorItem + " " + rectangle.getSquare());
+                            System.out.println(count + ": " + colorItem + "-" + rectangle.getSquare());
                     }
 
-                }else isOver = false;
+                }else isOver = true;
 
 
             }
