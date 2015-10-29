@@ -26,7 +26,6 @@ public class Test {
 
         NodeList shapeLevel = document.getChildNodes();
 
-       // ConcurrentLinkedQueue concurrentLinkedQueue = new ConcurrentLinkedQueue();
 
         int count = 0;
         NodeList figureLevel = shapeLevel.item(0).getChildNodes();
